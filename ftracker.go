@@ -42,7 +42,7 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 		dist := float64(lengthPool*countPool) / mInKm
 		speed := swimmingMeanSpeed(lengthPool, countPool, duration)
 		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight)
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, dist, speed, calories)
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\нСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, dist, speed, calories)
 	default:
 		return "неизвестный тип тренировки"
 	}
@@ -51,7 +51,6 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 // Константы для расчета калорий, расходуемых при беге.
 const (
 	runningCaloriesMeanSpeedMultiplier = 18   // множитель средней скорости.
-	runningCaloriesMeanSpeedShift      = 1.79 // сдвиг для расчета калорий при беге.
 )
 
 // RunningSpentCalories возвращает количество потраченных калорий при беге.
@@ -60,7 +59,7 @@ func RunningSpentCalories(action int, weight, duration float64) float64 {
 		return 0
 	}
 	speed := meanSpeed(action, duration)
-	return ((runningCaloriesMeanSpeedMultiplier * speed + runningCaloriesMeanSpeedShift) * weight / mInKm) * duration * minInH
+	return (runningCaloriesMeanSpeedMultiplier * speed * weight) * duration * minInH
 }
 
 // Константы для расчета калорий, расходуемых при ходьбе.
@@ -91,7 +90,8 @@ func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 	if duration == 0 {
 		return 0
 	}
-	return float64(lengthPool*countPool) / mInKm / duration
+	dist := float64(lengthPool*countPool) / mInKm
+	return dist / duration
 }
 
 // SwimmingSpentCalories возвращает количество потраченных калорий при плавании.
@@ -100,5 +100,5 @@ func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) 
 		return 0
 	}
 	speed := swimmingMeanSpeed(lengthPool, countPool, duration)
-	return (speed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration * minInH
+	return (speed * swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration * minInH
 }
