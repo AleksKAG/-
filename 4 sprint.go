@@ -17,23 +17,33 @@ const (
 	swimConstant2 = 2.0
 )
 
-// distance вычисляет дистанцию в километрах
+// distance вычисляет дистанцию в километрах на основе скорости и времени
 func distance(speed, time float64) float64 {
 	return speed * time
 }
 
-// meanSpeed вычисляет среднюю скорость для бега или ходьбы в км/ч.
+// meanSpeed вычисляет среднюю скорость для бега или ходьбы в км/ч
 func meanSpeed(distance, time float64) float64 {
+	if time == 0 {
+		return 0
+	}
 	return distance / time
 }
 
-// swimmingMeanSpeed вычисляет среднюю скорость для плавания в км/ч.
+// swimmingMeanSpeed вычисляет среднюю скорость для плавания в км/ч
 func swimmingMeanSpeed(distance, time float64) float64 {
+	if time == 0 {
+		return 0
+	}
 	return distance / time
 }
 
-// ShowTrainingInfo выводит информацию о тренировке на основе типа тренировки.
+// ShowTrainingInfo выводит информацию о тренировке на основе её типа
 func ShowTrainingInfo(trainingType string, duration, distanceKM, weight, height float64) string {
+	if duration <= 0 || distanceKM <= 0 {
+		return "Неверные данные для расчета тренировки"
+	}
+
 	var avgSpeed float64
 	var calories float64
 
@@ -58,18 +68,27 @@ func ShowTrainingInfo(trainingType string, duration, distanceKM, weight, height 
 		trainingType, duration, distanceKM, avgSpeed, calories)
 }
 
-// RunningSpentCalories рассчитывает количество сожженных калорий во время бега.
+// RunningSpentCalories рассчитывает количество сожженных калорий во время бега
 func RunningSpentCalories(avgSpeed, weight, duration float64) float64 {
+	if duration <= 0 || avgSpeed <= 0 || weight <= 0 {
+		return 0
+	}
 	return ((factorRun * avgSpeed * factorRun2) * weight / mInKM * duration * minInH)
 }
 
-// WalkingSpentCalories рассчитывает количество сожженных калорий во время ходьбы.
+// WalkingSpentCalories рассчитывает количество сожженных калорий во время ходьбы
 func WalkingSpentCalories(avgSpeedKMH, weight, height, duration float64) float64 {
+	if duration <= 0 || avgSpeedKMH <= 0 || weight <= 0 || height <= 0 {
+		return 0
+	}
 	avgSpeedMS := avgSpeedKMH * 1000 / 3600 // Конвертируем скорость из км/ч в м/с
 	return ((factorWalk1*weight + (math.Pow(avgSpeedMS, 2)/height)*factorWalk2*weight) * duration * minInH)
 }
 
-// SwimmingSpentCalories рассчитывает количество сожженных калорий во время плавания.
+// SwimmingSpentCalories рассчитывает количество сожженных калорий во время плавания
 func SwimmingSpentCalories(avgSpeed, weight, duration float64) float64 {
+	if duration <= 0 || avgSpeed <= 0 || weight <= 0 {
+		return 0
+	}
 	return (avgSpeed + swimConstant1) * swimConstant2 * weight * duration
 }
