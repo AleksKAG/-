@@ -5,21 +5,21 @@ import (
 	"math"
 )
 
-// Основные константы, необходимые для расчетов.
+// Основные константы для расчетов
 const (
-	lenStep   = 0.65  // средняя длина шага.
-	mInKm     = 1000  // количество метров в километре.
-	minInH    = 60    // количество минут в часе.
-	kmhInMsec = 0.278 // коэффициент для преобразования км/ч в м/с.
-	cmInM     = 100   // количество сантиметров в метре.
+	lenStep   = 0.65  // Средняя длина шага
+	mInKm     = 1000  // Количество метров в километре
+	minInH    = 60    // Количество минут в часе
+	kmhInMsec = 0.278 // Коэффициент для преобразования км/ч в м/с
+	cmInM     = 100   // Количество сантиметров в метре
 )
 
-// distance возвращает дистанцию (в километрах), которую преодолел пользователь за время тренировки.
+// distance возвращает дистанцию (в километрах), которую прошел пользователь.
 func distance(action int) float64 {
 	return float64(action) * lenStep / mInKm
 }
 
-// meanSpeed возвращает значение средней скорости движения во время тренировки.
+// meanSpeed возвращает среднюю скорость движения.
 func meanSpeed(action int, duration float64) float64 {
 	if duration == 0 {
 		return 0
@@ -48,10 +48,10 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 	}
 }
 
-// Константы для расчета калорий, расходуемых при беге.
+// Константы для расчета калорий при беге
 const (
-	runningCaloriesMeanSpeedMultiplier = 18   // множитель средней скорости.
-	runningCaloriesMeanSpeedShift      = 1.79 // сдвиг для расчета калорий при беге.
+	runningCaloriesMeanSpeedMultiplier = 18   // Множитель средней скорости
+	runningCaloriesMeanSpeedShift      = 1.79 // Сдвиг для расчета калорий при беге
 )
 
 // RunningSpentCalories возвращает количество потраченных калорий при беге.
@@ -63,10 +63,10 @@ func RunningSpentCalories(action int, weight, duration float64) float64 {
 	return ((runningCaloriesMeanSpeedMultiplier * speed * runningCaloriesMeanSpeedShift) * weight / mInKm) * (duration * minInH)
 }
 
-// Константы для расчета калорий, расходуемых при ходьбе.
+// Константы для расчета калорий при ходьбе
 const (
-	walkingCaloriesWeightMultiplier = 0.035 // множитель массы тела.
-	walkingSpeedHeightMultiplier    = 0.029 // множитель роста.
+	walkingCaloriesWeightMultiplier = 0.035 // Множитель массы тела
+	walkingSpeedHeightMultiplier    = 0.029 // Множитель роста
 )
 
 // WalkingSpentCalories возвращает количество потраченных калорий при ходьбе.
@@ -80,10 +80,10 @@ func WalkingSpentCalories(action int, duration, weight, height float64) float64 
 	return (walkingCaloriesWeightMultiplier*weight + (math.Pow(avgSpeedMS, 2)/heightM)*walkingSpeedHeightMultiplier*weight) * duration
 }
 
-// Константы для расчета калорий, расходуемых при плавании.
+// Константы для расчета калорий при плавании
 const (
-	swimmingCaloriesMeanSpeedShift   = 1.1  // среднее количество сжигаемых калорий при плавании относительно скорости.
-	swimmingCaloriesWeightMultiplier = 2    // множитель веса при плавании.
+	swimmingCaloriesMeanSpeedShift   = 1.1  // Среднее количество сжигаемых калорий при плавании
+	swimmingCaloriesWeightMultiplier = 2    // Множитель веса при плавании
 )
 
 // swimmingMeanSpeed возвращает среднюю скорость при плавании.
