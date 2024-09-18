@@ -60,7 +60,7 @@ func RunningSpentCalories(action int, weight, duration float64) float64 {
 		return 0
 	}
 	speed := meanSpeed(action, duration)
-	return ((runningCaloriesMeanSpeedMultiplier * speed * runningCaloriesMeanSpeedShift) * weight / mInKm) * (duration * minInH)
+	return ((runningCaloriesMeanSpeedMultiplier * speed + runningCaloriesMeanSpeedShift) * weight / mInKm) * duration * minInH
 }
 
 // Константы для расчета калорий, расходуемых при ходьбе.
@@ -75,9 +75,9 @@ func WalkingSpentCalories(action int, duration, weight, height float64) float64 
 		return 0
 	}
 	avgSpeed := meanSpeed(action, duration)
-	avgSpeedMS := avgSpeed * kmhInMsec // Конвертируем скорость из км/ч в м/с
-	heightM := height / cmInM           // Конвертируем рост из см в метры
-	return (walkingCaloriesWeightMultiplier*weight + (math.Pow(avgSpeedMS, 2)/heightM)*walkingSpeedHeightMultiplier*weight) * duration
+	avgSpeedMS := avgSpeed * kmhInMsec  // Конвертируем скорость из км/ч в м/с
+	heightM := height / cmInM            // Конвертируем рост из см в метры
+	return (walkingCaloriesWeightMultiplier*weight + (math.Pow(avgSpeedMS, 2)/heightM)*walkingSpeedHeightMultiplier*weight) * duration * minInH
 }
 
 // Константы для расчета калорий, расходуемых при плавании.
@@ -100,5 +100,5 @@ func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) 
 		return 0
 	}
 	speed := swimmingMeanSpeed(lengthPool, countPool, duration)
-	return (speed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
+	return (speed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration * minInH
 }
