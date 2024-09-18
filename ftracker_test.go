@@ -13,12 +13,13 @@ func Test_distance(t *testing.T) {
 		args args
 		want float64
 	}{
+		// TODO: Add test cases.
 		{
 			name: "Success test",
 			args: args{
 				action: 2000,
 			},
-			want: 2.6, // 2000 * 0.65 / 1000
+			want: 1.3,
 		},
 		{
 			name: "Null action",
@@ -32,7 +33,7 @@ func Test_distance(t *testing.T) {
 			args: args{
 				action: 1,
 			},
-			want: 0.00065, // 1 * 0.65 / 1000
+			want: 0.00065,
 		},
 	}
 	for _, tt := range tests {
@@ -54,13 +55,14 @@ func Test_meanSpeed(t *testing.T) {
 		args args
 		want float64
 	}{
+		// TODO: Add test cases.
 		{
 			name: "Successful test",
 			args: args{
 				action:   2000,
 				duration: 2.0,
 			},
-			want: 1.3, // 2.6 / 2.0
+			want: 0.65,
 		},
 		{
 			name: "Null duration",
@@ -104,6 +106,7 @@ func TestShowTrainingInfo(t *testing.T) {
 		args args
 		want string
 	}{
+		// TODO: Add test cases.
 		{
 			name: "run test",
 			args: args{
