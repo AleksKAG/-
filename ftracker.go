@@ -103,5 +103,6 @@ func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) 
         return 0
     }
     speed := swimmingMeanSpeed(lengthPool, countPool, duration)
+    // Рассчитываем количество потраченных калорий по формуле
     return (speed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
 }
